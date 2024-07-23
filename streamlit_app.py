@@ -63,9 +63,9 @@ def main():
                 st.write(f"**Description**: {video['description']}")
 
                 # Add button to summarize video
-                if st.button(f"Summarize Video {index + 1}"):
+                if st.button(f"Summarize Video {index + 1}", key=f"summarize_button_{index}"):
                     with st.spinner('Summarizing...'):
-                        summary = summarize_youtube_video(video['link'],oai_key)
+                        summary = summarize_youtube_video(video['link'], oai_key)
                         st.write("**Summary**: ")
                         st.write(summary)
 
