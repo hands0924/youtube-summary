@@ -19,14 +19,13 @@ def fetch_youtube_data(api_key, query):
 
 
 # Function to summarize YouTube video using LangChain
-def summarize_youtube_video(video_url):
+def summarize_youtube_video(video_url, oai_key):
     loader = YoutubeLoader.from_youtube_url(youtube_url=video_url,language='ko')
     documents = loader.load()
     # Use RecursiveCharacterTextSplitter if the document is too long
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     texts = text_splitter.split_documents(documents)
-    key = "sk-None-fVmMnZGIpo359nwsb7LeT3BlbkFJN8wRCtwyNIsuTRdayXKA"
-    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, api_key = key)
+    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, api_key = oai_key)
 
     # Load the summarize chain
     summaries = []
@@ -45,6 +44,7 @@ def main():
     st.title("YouTube Video Search and Summarize App")
 
     api_key = st.text_input("Enter your SERP API key", type="password")
+    oai_key = st.text_input("Enter your OpenAI API key", type="password")
     search_query = st.text_input("Enter search keyword")
     num_results = st.selectbox("Select number of results to display", [5, 10, 15, 20], index=0)
 
@@ -65,7 +65,7 @@ def main():
                 # Add button to summarize video
                 if st.button(f"Summarize Video {index + 1}"):
                     with st.spinner('Summarizing...'):
-                        summary = summarize_youtube_video(video['link'])
+                        summary = summarize_youtube_video(video['link'],oai_key)
                         st.write("**Summary**: ")
                         st.write(summary)
 
