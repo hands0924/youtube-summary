@@ -25,7 +25,7 @@ def summarize_youtube_video(video_url):
     # Use RecursiveCharacterTextSplitter if the document is too long
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     texts = text_splitter.split_documents(documents)
-    key = "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"
+    key = "sk-None-fVmMnZGIpo359nwsb7LeT3BlbkFJN8wRCtwyNIsuTRdayXKA"
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, api_key = key)
 
     # Load the summarize chain
